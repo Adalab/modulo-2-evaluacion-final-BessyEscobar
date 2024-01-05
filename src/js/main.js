@@ -14,29 +14,9 @@ const inputSearch = document.querySelector('.js_input');
 const buttonSearch = document.querySelector('.js_buttonSearch');
 
 const url = `https://api.disneyapi.dev/character?pageSize=50`;
-let dataDisney = [];
+let disneyData = [];
 let favoritesDisney = [];
 
-//datos 
-const disneyData = [
-    {
-        "_id": 6,
-        "films": [],
-        "shortFilms": [],
-        "tvShows": [],
-        "videoGames": [],
-        "parkAttractions": [],
-        "allies": [],
-        "enemies": [],
-        "sourceUrl": "https://disney.fandom.com/wiki/%27Olu_Mel",
-        "name": "'Olu Mel",
-        "imageUrl": "https://static.wikia.nocookie.net/disney/images/6/61/Olu_main.png",
-        "createdAt": "2021-04-12T01:25:09.759Z",
-        "updatedAt": "2021-12-20T20:39:18.031Z",
-        "url": "https://api.disneyapi.dev/characters/6",
-        "__v": 0
-        }
-]; 
 
 //Funciones:
 function renderOne(characterData) {
@@ -62,3 +42,12 @@ function renderAll() {
 //Código cuando carga la Pág
 
 renderAll()
+
+fetch('https://dev.adalab.es/api/disney?pageSize=15')
+  .then( response => response.json() )
+  .then( data => {
+console.log(data.data);
+  disneyData = data.data;
+
+  renderAll();
+  });
