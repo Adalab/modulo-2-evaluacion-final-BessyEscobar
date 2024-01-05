@@ -13,7 +13,30 @@ const favoritesList = document.querySelector('.js_favoritesList');
 const inputSearch = document.querySelector('.js_input');
 const buttonSearch = document.querySelector('.js_buttonSearch');
 
+const url = `https://api.disneyapi.dev/character?pageSize=50`;
+let dataDisney = [];
+let favoritesDisney = [];
 
+//datos 
+const disneyData = [
+    {
+        "_id": 6,
+        "films": [],
+        "shortFilms": [],
+        "tvShows": [],
+        "videoGames": [],
+        "parkAttractions": [],
+        "allies": [],
+        "enemies": [],
+        "sourceUrl": "https://disney.fandom.com/wiki/%27Olu_Mel",
+        "name": "'Olu Mel",
+        "imageUrl": "https://static.wikia.nocookie.net/disney/images/6/61/Olu_main.png",
+        "createdAt": "2021-04-12T01:25:09.759Z",
+        "updatedAt": "2021-12-20T20:39:18.031Z",
+        "url": "https://api.disneyapi.dev/characters/6",
+        "__v": 0
+        }
+]; 
 
 //Funciones:
 function renderOne(characterData) {
@@ -24,25 +47,18 @@ function renderOne(characterData) {
     <img class="" src="${characterData.imageUrl}" alt="character ${characterData.name}" title="character ${characterData.name}"/> 
     </div>
   </li>`;
-}
+};
 
-renderOne( {
-    "_id": 6,
-    "films": [],
-    "shortFilms": [],
-    "tvShows": [],
-    "videoGames": [],
-    "parkAttractions": [],
-    "allies": [],
-    "enemies": [],
-    "sourceUrl": "https://disney.fandom.com/wiki/%27Olu_Mel",
-    "name": "'Olu Mel",
-    "imageUrl": "https://static.wikia.nocookie.net/disney/images/6/61/Olu_main.png",
-    "createdAt": "2021-04-12T01:25:09.759Z",
-    "updatedAt": "2021-12-20T20:39:18.031Z",
-    "url": "https://api.disneyapi.dev/characters/6",
-    "__v": 0
-    }
+function renderAll() {
+    for( let i=0; i < disneyData.length; i++ ) {
+      renderOne( disneyData[i] );
+    };
+};
 
+//funciones de eventos (handler)
 
-)
+//Eventos
+
+//Código cuando carga la Pág
+
+renderAll()
