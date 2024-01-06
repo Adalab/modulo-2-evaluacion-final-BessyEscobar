@@ -10,11 +10,13 @@ const characterList = document.querySelector('.js_charactersList');
 const favoritesList = document.querySelector('.js_favoriteList');
 
 //Constantes del buscador
+const formSearch = document.querySelector('.js_form')
 const inputSearch = document.querySelector('.js_input');
 const buttonSearch = document.querySelector('.js_buttonSearch');
 
 const url = `https://api.disneyapi.dev/character?pageSize=50`;
 let disneyData = [];
+let filteredData = [];
 const favoritesData = []; // cambiar a let si da error
 
 
@@ -30,8 +32,10 @@ function renderOne(characterData) {
 };
 
 function renderAll() {
-    for( let i=0; i < disneyData.length; i++ ) {
-      renderOne( disneyData[i] );
+    characterList.innerHTML = '';
+
+    for( let i=0; i < filteredData.length; i++ ) {
+      renderOne( filteredData[i] );
     };
 
     const allCharactersLi = document.querySelectorAll('.js_charactersDisney');
@@ -79,8 +83,67 @@ console.log(indexCharacter)
     console.log('funciona')
 };
 
+//Eventos
+formSearch.addEventListener( 'submit' , (event) => {
+    event.preventDefault();
 
-    // clickedList.classList.toggle('favorites');
+    filteredData = disneyData.filter((character) => character.name.toLowerCase().includes( inputSearch.value.toLowerCase() ) );
+
+    fetch(`https://api.disneyapi.dev/character?name=${inputSearch.value}`)
+      .then(response => response.json)
+      .then(data => {
+        disneyData = data.data;
+
+        renderAll()
+      })
+
+      console.log(formSearch)
+});
+
+
+
+// const handleClickSearch = (event) => {
+//     event.prevenDefault();
+//     const searchValue = inputSearch.value;  
+//     const filterList = disneyData.filter(character) => character.name.toLowerCase().includes(searchValue.toLowerCase())
+
+//     renderAll()
+// }
+
+// buttonSearch.addEventListener('Click' , handleClickSearch);
+
+
+
+// buttonSearch.addEventListener( 'submit' , (event) => {
+//     event.preventDefault();
+
+//     disneyData = disneyData.filter((character) => character.name.toLowerCase().incluedes( inputSearch.value.toLowerCase() ));
+
+//     renderAll();
+
+
+
+// });
+
+
+//Código cuando carga la Pág
+
+renderAll()
+
+fetch('//api.disneyapi.dev/character?pageSize=50')
+  .then( response => response.json() )
+  .then( data => {
+  disneyData = data.data;
+
+  renderAll();
+  });
+
+
+
+
+
+   //este codigo era para agregar favoritos 
+   //clickedList.classList.toggle('favorites');
 
     // clickedList.id
 
@@ -96,18 +159,3 @@ console.log(indexCharacter)
 //     <img class="" src="${characterData.imageUrl}" alt="character ${characterData.name}" title="character ${characterData.name}"/> 
 //     </div>
 //   </li>`;
-
-//Eventos
-
-//Código cuando carga la Pág
-
-renderAll()
-
-fetch('//api.disneyapi.dev/character?pageSize=50')
-  .then( response => response.json() )
-  .then( data => {
-    //    console.log(data.data); //hay que borrar este console
-  disneyData = data.data;
-
-  renderAll();
-  });
