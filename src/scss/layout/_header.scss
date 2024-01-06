@@ -2,4 +2,19 @@
   display: flex;
   justify-content: space-evenly;
   margin-bottom: 3rem;
+  background-image: url(../images/disney-castle.jpeg);
+  background-position: center;
+  background-repeat: none;
+  background-size: cover;
+  width: 100%;
+  height: 30rem;
+
+  &--title {
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
 }
