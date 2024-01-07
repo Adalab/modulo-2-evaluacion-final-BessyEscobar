@@ -21,6 +21,7 @@ const favoritesData = []; // cambiar a let si da error
 
 
 //Funciones:
+//1.- para la lista de personajes.
 function renderOne(characterData) {
     characterList.innerHTML += `
     <li class="js_charactersDisney" id="${characterData._id}">
@@ -45,6 +46,7 @@ function renderAll(data) {
     }
 };
 
+//2.- para la lista de favoritos
 function renderOneFavorite(favoritesData) {
     favoritesList.innerHTML = '';
     favoritesList.innerHTML += `
@@ -64,6 +66,7 @@ function renderFavorite() {
 }
 
 //funciones de eventos (handler)
+//2.- para buscar 
 function handleClickResult(event) {
 
     const clickedList = parseInt(event.currentTarget.id);
@@ -113,9 +116,6 @@ formSearch.addEventListener( 'submit' , (event) => {
 
 
 
-
-
-
 //Código cuando carga la Pág
 
 renderAll(disneyData)
@@ -128,8 +128,8 @@ fetch('//api.disneyapi.dev/character?pageSize=50')
   renderAll(disneyData);
   });
 
-
-
+//localstorege
+ // localStorage.setItem('Favorite', JSON.stringify(favoritesData))
 
 
    //este codigo era para agregar favoritos 
