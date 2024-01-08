@@ -19,8 +19,8 @@ let disneyData = [];
 let filteredData = [];
 const favoritesData = []; // cambiar a let si da error
 
-
 //Funciones:
+
 //1.- para la lista de personajes.
 function renderOne(characterData) {
     characterList.innerHTML += `
@@ -48,7 +48,6 @@ function renderAll(data) {
 
 //2.- para la lista de favoritos
 function renderOneFavorite(favoritesData) {
-    favoritesList.innerHTML = '';
     favoritesList.innerHTML += `
     <li class="js_charactersDisney" id="${favoritesData._id}">
     <div class="">
@@ -57,9 +56,13 @@ function renderOneFavorite(favoritesData) {
     <img class="" src="${favoritesData.imageUrl}" alt="character ${favoritesData.name}" title="character ${favoritesData.name}"/> 
     </div>
   </li>`; 
+
+  handleClickClosed()
 };
 
+//borra fav y luego incluye el charater que clickeo -
 function renderFavorite() {
+    favoritesList.innerHTML = '';
     for( let i=0; i < favoritesData.length; i++ ) {
       renderOneFavorite( favoritesData[i] );
     };
@@ -81,22 +84,32 @@ console.log(indexCharacter)
         favoritesData.splice(indexCharacter, 1);
     }
 
-    renderFavorite();
-    // clickedList.classList.toggle('favorite')// no funciona
+    localStorage.setItem('Favorite', JSON.stringify(favoritesData))
 
+    renderFavorite();
+    
     console.log('funciona')
 };
 
-function handleClickRemoveFavorite (event) {
-    const idCharacter = parseInt(event.currentTarget.id);
+//3.- Funcion para borrar con la X
 
-    console.log(idCharacter);
-    const favoriteCharacterIndex = favoritesData.findIndex( (favorite) => favorite._id === idCharacter );
+function handleClickDeleteFav(event) {
+  const favSelect = parseInt(event.currentTarget.id);
+  console.log(favSelect);
+  const favoriteFoundIndex = favoritesData.findIndex(
+    (favoritesList) => favoritesList._id === favSelect
+  );
+  favoritesData.splice(favoriteFoundIndex, 1);
 
-    favoritesData.splice(favoriteCharacterIndex, 1);
-    favoritesData.classList.toggle('favorites')
-    renderFavorite(favoritesData);
-};//no funciona
+  renderFavorite(favoritesData)
+}
+
+function handleClickClosed() {
+    const characterClosed = document.querySelectorAll('.js_favoriteCharacterClosed');
+    for (const closed of characterClosed) {
+        closed.addEventListener( 'click' , handleClickDeleteFav);
+    }
+}
 
 //Eventos
 formSearch.addEventListener( 'submit' , (event) => {
