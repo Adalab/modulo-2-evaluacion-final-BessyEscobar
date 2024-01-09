@@ -1,6 +1,6 @@
 'use strict';
 
-import './lists.js';
+import './fetch.js';
 
 console.log('>> Ready :)');
 
@@ -13,11 +13,12 @@ const favoritesList = document.querySelector('.js_favoriteList');
 const formSearch = document.querySelector('.js_form')
 const inputSearch = document.querySelector('.js_input');
 const buttonSearch = document.querySelector('.js_buttonSearch');
+// const buttonReset = document.querySelector('.js_buttonReset')
 
 const url = `https://api.disneyapi.dev/character?pageSize=50`;
 let disneyData = [];
 let filteredData = [];
-const favoritesData = []; // cambiar a let si da error
+const favoritesData = JSON.parse(localStorage.getItem("favoritesData")) || [];
 
 //Funciones:
 
@@ -55,7 +56,7 @@ function renderOneFavorite(favoritesData) {
     <h3 class="" id="${favoritesData._id}">${favoritesData.name}</h3>
     <img class="" src="${favoritesData.imageUrl}" alt="character ${favoritesData.name}" title="character ${favoritesData.name}"/> 
     </div>
-  </li>`; 
+  </li>`;
 
   handleClickClosed()
 };
@@ -79,15 +80,17 @@ console.log(clickedList)
     const indexCharacter = favoritesData.findIndex( (character) => character._id === clickedList);
 console.log(indexCharacter)
     if (indexCharacter === -1) {
-        favoritesData.push(selectedCharacter);
-    } else {
-        favoritesData.splice(indexCharacter, 1);
-    }
 
-    localStorage.setItem('Favorite', JSON.stringify(favoritesData))
-
-    renderFavorite();
+        favoritesData.push(selectedCharacter);//para poner el array
+        localStorage.setItem('favoritesData', JSON.stringify(favoritesData));//no funciona
     
+    } else {
+
+        favoritesData.splice(indexCharacter, 1); //para quitar el array
+        localStorage.setItem('favoresData', JSON.stringify(favoritesData));//no funciona
+
+    }
+    renderFavorite();
     console.log('funciona')
 };
 
@@ -111,6 +114,19 @@ function handleClickClosed() {
     }
 }
 
+//4.- Para borrar con el boton de reset
+// function handleClickResetAll(event) {
+//     const buttonReset = document.querySelector('.js_buttonReset');
+    
+//     for(const favoriteSelected of buttonReset) {
+//         favoriteSelected,class.remove('hidden');
+//     }
+
+//     favoritesData = [];
+
+//     renderAll(disneyData)
+// }
+
 //Eventos
 formSearch.addEventListener( 'submit' , (event) => {
     event.preventDefault();
@@ -127,9 +143,19 @@ formSearch.addEventListener( 'submit' , (event) => {
 
 });
 
+// buttonReset.addEventListener( 'click' , function() {
+   
+//     if (favoritesData.length = 0 ) {
+//         buttonReset.classList.add('hidden');
+//         } else {
+//             buttonReset.classList.remove('hidden');
+//         }
+    
+// });
 
 
-//Código cuando carga la Pág
+
+// //Código cuando carga la Pág
 
 renderAll(disneyData)
 
@@ -140,51 +166,3 @@ fetch('//api.disneyapi.dev/character?pageSize=50')
 
   renderAll(disneyData);
   });
-
-//localstorege
- // localStorage.setItem('Favorite', JSON.stringify(favoritesData))
-
-
-   //este codigo era para agregar favoritos 
-   //clickedList.classList.toggle('favorites');
-
-    // clickedList.id
-
-    // console.log(clickedList.id)
-
-    // const selectedCharacters = disneyData.find( (Character) => Character._id === id );
-    
-
-//     favoritesList.innerHTML += `
-//     <li class="js_charactersDisney" id="${characterData._id}">
-//     <div class="">
-//     <h3 class="" id="${characterData._id}">${characterData.name}</h3>
-//     <img class="" src="${characterData.imageUrl}" alt="character ${characterData.name}" title="character ${characterData.name}"/> 
-//     </div>
-//   </li>`;
-
-
-
-//codigo para busqueda
-// const handleClickSearch = (event) => {
-//     event.prevenDefault();
-//     const searchValue = inputSearch.value;  
-//     const filterList = disneyData.filter(character) => character.name.toLowerCase().includes(searchValue.toLowerCase())
-
-//     renderAll()
-// }
-
-// buttonSearch.addEventListener('Click' , handleClickSearch);
-
-
-
-// buttonSearch.addEventListener( 'submit' , (event) => {
-//     event.preventDefault();
-
-//     disneyData = disneyData.filter((character) => character.name.toLowerCase().incluedes( inputSearch.value.toLowerCase() ));
-
-//     renderAll();
-
-
-
-// });
