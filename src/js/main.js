@@ -114,18 +114,6 @@ function handleClickClosed() {
     }
 }
 
-//4.- Para borrar con el boton de reset
-// function handleClickResetAll(event) {
-//     const buttonReset = document.querySelector('.js_buttonReset');
-    
-//     for(const favoriteSelected of buttonReset) {
-//         favoriteSelected,class.remove('hidden');
-//     }
-
-//     favoritesData = [];
-
-//     renderAll(disneyData)
-// }
 
 //Eventos
 formSearch.addEventListener( 'submit' , (event) => {
@@ -142,17 +130,6 @@ formSearch.addEventListener( 'submit' , (event) => {
       })
 
 });
-
-// buttonReset.addEventListener( 'click' , function() {
-   
-//     if (favoritesData.length = 0 ) {
-//         buttonReset.classList.add('hidden');
-//         } else {
-//             buttonReset.classList.remove('hidden');
-//         }
-    
-// });
-
 
 
 // //Código cuando carga la Pág
