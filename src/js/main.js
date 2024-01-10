@@ -18,6 +18,7 @@ const buttonSearch = document.querySelector('.js_buttonSearch');
 const url = `https://api.disneyapi.dev/character?pageSize=50`;
 let disneyData = [];
 let filteredData = [];
+
 const favoritesData = JSON.parse(localStorage.getItem("favoritesData")) || [];
 
 //Funciones:
@@ -82,12 +83,12 @@ console.log(indexCharacter)
     if (indexCharacter === -1) {
 
         favoritesData.push(selectedCharacter);//para poner el array
-        localStorage.setItem('favoritesData', JSON.stringify(favoritesData));//no funciona
+        localStorage.setItem('favoritesData', JSON.stringify(favoritesData));
     
     } else {
 
         favoritesData.splice(indexCharacter, 1); //para quitar el array
-        localStorage.setItem('favoresData', JSON.stringify(favoritesData));//no funciona
+        localStorage.setItem('favoresData', JSON.stringify(favoritesData));
 
     }
     renderFavorite();
@@ -122,10 +123,16 @@ formSearch.addEventListener( 'submit' , (event) => {
     filteredData = disneyData.filter((character) => character.name.toLowerCase().includes( inputSearch.value.toLowerCase() ) );
 
     fetch(`https://api.disneyapi.dev/character?name=${inputSearch.value}`)
-      .then(response => response.json)
+      .then(response => response.json())
       .then(data => {
-        disneyData = data.data;
+        if (Array.isArray(data.data)){
+            disneyData = data.data;
+        } else {
+            disneyData = [data.data]
+        }
+        // disneyData = data.data;
 
+        favoritesList.innerHTML = '';        
         renderAll(filteredData)
       })
 
@@ -142,4 +149,5 @@ fetch('//api.disneyapi.dev/character?pageSize=50')
   disneyData = data.data;
 
   renderAll(disneyData);
+  renderFavorite();
   });
