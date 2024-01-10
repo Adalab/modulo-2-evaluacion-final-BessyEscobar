@@ -88,7 +88,7 @@ console.log(indexCharacter)
     } else {
 
         favoritesData.splice(indexCharacter, 1); //para quitar el array
-        localStorage.setItem('favoresData', JSON.stringify(favoritesData));
+        localStorage.setItem('favoritesData', JSON.stringify(favoritesData));
 
     }
     renderFavorite();
