@@ -15,6 +15,8 @@ const inputSearch = document.querySelector('.js_input');
 const buttonSearch = document.querySelector('.js_buttonSearch');
 // const buttonReset = document.querySelector('.js_buttonReset')
 
+const logButton = document.querySelector('.js_logButton')
+
 const url = `https://api.disneyapi.dev/character?pageSize=50`;
 let disneyData = [];
 let filteredData = [];
@@ -27,7 +29,10 @@ const favoritesData = JSON.parse(localStorage.getItem("favoritesData")) || [];
 function renderOne(characterData) {
     characterList.innerHTML += `
     <li class="js_charactersDisney" id="${characterData._id}">
+    
     <div class="">
+
+    <p>${characterData.films}</p>
     <h3 class="" id="${characterData._id}">${characterData.name}</h3>
     <img class="" src="${characterData.imageUrl}" alt="character ${characterData.name}" title="character ${characterData.name}"/> 
     </div>
@@ -71,15 +76,15 @@ function renderFavorite() {
 }
 
 //funciones de eventos (handler)
-//2.- para buscar 
+//2.- para agragar a favoritos
 function handleClickResult(event) {
 
     const clickedList = parseInt(event.currentTarget.id);
-console.log(clickedList)
+// console.log(clickedList)
     const selectedCharacter = disneyData.find( (character) => character._id === clickedList );
 
     const indexCharacter = favoritesData.findIndex( (character) => character._id === clickedList);
-console.log(indexCharacter)
+// console.log(indexCharacter)
     if (indexCharacter === -1) {
 
         favoritesData.push(selectedCharacter);//para poner el array
@@ -92,7 +97,7 @@ console.log(indexCharacter)
 
     }
     renderFavorite();
-    console.log('funciona')
+    // console.log('funciona')
 };
 
 //3.- Funcion para borrar con la X
@@ -138,8 +143,16 @@ formSearch.addEventListener( 'submit' , (event) => {
 
 });
 
+// 4.- buton log
+function counterFav() {
+  favoritesData.forEach( favoritesData => {
+    console.log( 'Tienes' + favoritesData.length + 'favoritos')
+  })
+}
 
-// //Código cuando carga la Pág
+logButton.addEventListener( 'click' , counterFav )
+
+//Código cuando carga la Pág
 
 renderAll(disneyData)
 
